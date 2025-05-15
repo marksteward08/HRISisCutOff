@@ -1,5 +1,6 @@
 import express from 'express';
 import fetch from 'node-fetch'; 
+import cors from 'cors';
 
 const app = express();
 const PORT = 3000;
@@ -8,6 +9,12 @@ let isCutOff = false;
 
 // Middleware
 app.use(express.json());
+
+app.use(cors({
+    origin: '*', // Allow all origins
+    methods: ['GET', 'POST'], // Allow specific HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
+}));
 
 // Routes
 app.get('/', (req, res) => {
