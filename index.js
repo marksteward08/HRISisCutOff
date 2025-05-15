@@ -11,9 +11,9 @@ let isCutOff = false;
 app.use(express.json());
 
 app.use(cors({
-    origin: '*', // Allow all origins
-    methods: ['GET', 'POST'], // Allow specific HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
+    origin: '*', 
+    methods: ['GET', 'POST'], 
+    allowedHeaders: ['Content-Type', 'Authorization'], 
 }));
 
 // Routes
@@ -31,20 +31,6 @@ app.get('/pauseCutOff', (req, res) => {
     isCutOff = false;
     res.json({ success: true, message: 'isCutOff set to false' });
 });
-
-//Reset isCutOff at midnight
-function scheduleMidnightReset() {
-    const now = new Date();
-    const nextMidnight = new Date();
-    nextMidnight.setHours(24, 0, 0, 0); // Set to midnight of the next day
-    const timeUntilMidnight = nextMidnight - now;
-
-    setTimeout(() => {
-        isCutOff = false;
-        console.log('isCutOff has been reset to false at midnight');
-        scheduleMidnightReset(); // Schedule the next reset
-    }, timeUntilMidnight);
-}
 
 function startPing() {
     const url = 'https://hrisiscutoff.onrender.com/';
